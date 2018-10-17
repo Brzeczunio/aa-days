@@ -1,0 +1,169 @@
+<meta charset="UTF-8">
+<h3>
+    <strong>Zadanie X – Postawienie infrastruktury testowej opartej na Zalenium i uruchomienie testów w Jenkins’ie</strong>
+</h3
+
+<p>
+    <strong>LINUX</strong>
+</p>
+
+<p>
+    <strong>Pipeline Script</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>pipeline {
+ agent {
+  label 'local_machine'
+ }
+ stages {
+  stage('GIT Checkout') {
+   steps {
+	git branch: '$BRANCH', url: 'https://github.com/tklepacki/aa-days.git'
+   }
+  }
+  stage('Create Selenium Grid') {
+   steps {
+	script {
+ 	if (isUnix()) {
+  	sh "docker-compose -f src/main/java/docker/$TEST_INFRASTRUCTURE/docker-compose.yml up -d"
+ 	} else {
+  	bat("set COMPOSE_CONVERT_WINDOWS_PATHS=1 &amp; docker-compose -f src/main/java/docker/$TEST_INFRASTRUCTURE/docker-compose.yml up -d")
+ 	}
+	}
+   }
+  }
+  stage('Test Run') {
+   steps {
+	script {
+ 	if (isUnix()) {
+  	sh "./mvnw clean install"
+ 	} else {
+  	bat("mvnw clean install")
+ 	}
+	}
+   }
+  }
+  stage('Results') {
+   steps {
+	step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+   }
+  }
+ }
+}</code></pre>
+
+<p>
+    <strong>WINDOWS</strong>
+</p>
+
+<p>
+    <strong>Komendy uruchamiające Zalenium:</strong>
+</p>
+<ul>
+    <li>
+        <p>
+            docker pull elgalu/selenium
+        </p>
+    </li>
+    <li>
+        <p>
+            docker pull dosel/zalenium
+        </p>
+    </li>
+    <li>
+        <p>
+          docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start
+        </p>
+    </li>
+</ul>
+
+<p>
+    <strong>Pipeline Script</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>pipeline {
+ agent {
+  label 'local_machine'
+ }
+ stages {
+  stage('GIT Checkout') {
+   steps {
+	git branch: '$BRANCH', url: 'https://github.com/tklepacki/aa-days.git'
+   }
+  }
+  stage('Test Run') {
+   steps {
+	script {
+ 	if (isUnix()) {
+  	sh "./mvnw clean install"
+ 	} else {
+  	bat("mvnw clean install")
+ 	}
+	}
+   }
+  }
+  stage('Results') {
+   steps {
+	step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+   }
+  }
+ }
+}</code></pre>
+
+<p>
+    <strong>OSX</strong>
+</p>
+
+<p>
+    <strong>Komendy uruchamiające Zalenium:</strong>
+</p>
+<ul>
+    <li>
+        <p>
+            docker pull elgalu/selenium
+        </p>
+    </li>
+    <li>
+        <p>
+            docker pull dosel/zalenium
+        </p>
+    </li>
+    <li>
+        <p>
+            docker run --rm -ti --name zalenium -p 4444:4444 -e DOCKER=17.06.2-ce -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start
+        </p>
+    </li>
+</ul>
+
+<p>
+    <strong>Pipeline Script</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>pipeline {
+ agent {
+  label 'local_machine'
+ }
+ stages {
+  stage('GIT Checkout') {
+   steps {
+	git branch: '$BRANCH', url: 'https://github.com/tklepacki/aa-days.git'
+   }
+  }
+  stage('Test Run') {
+   steps {
+	script {
+ 	if (isUnix()) {
+  	sh "./mvnw clean install"
+ 	} else {
+  	bat("mvnw clean install")
+ 	}
+	}
+   }
+  }
+  stage('Results') {
+   steps {
+	step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+   }
+  }
+ }
+}</code></pre>
+

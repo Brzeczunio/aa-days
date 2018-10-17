@@ -1,0 +1,14 @@
+mvnw to jest maven wrapper czyli pozwala na uruchamianie mavena bez jego instalacji na kompie. Czyli jest lokalnie w projekcie
+
+
+docker info
+docker pull
+docker image ls
+docker uruchamianiedocker ps -a
+docker rm <id kontenera>
+
+docker run -v (zapisuje wszystkie zmiany ustawiane na jenkinsie) !!!!!
+
+docker start jenkins (uruchamia dockera po restarcie linucha) !!!!!
+
+pipeline script jest pisany w groovy

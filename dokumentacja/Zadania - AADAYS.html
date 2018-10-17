@@ -1,0 +1,724 @@
+<meta charset="UTF-8">
+<br>
+<h3>
+    <strong>Zadanie I </strong>
+    <strong>– Uruchomienie testów - weryfikacja</strong>
+</h3>
+<ol>
+    <li>
+        <p>
+Uruchom zestaw testowy (<em><strong>src/test/resources/testsuite.xml</strong></em>) z
+            poziomu IDE.
+        </p>
+    </li>
+    <li>
+        <p>
+            Wejdź do folderu z projektem w konsoli i uruchom zestaw testowy z
+            poziomu Maven’a:
+        </p>
+    </li>
+<ul>
+    <li>
+        <p>
+            <em><strong>./mvnw clean install </strong></em>
+            (Linux)
+        </p>
+    </li>
+    <li>
+        <p>
+            <em><strong>mvnw clean install </strong></em>
+            (Windows)
+        </p>
+    </li>
+</ul>
+    <li>
+        <p align="justify">
+            W obu przypadkach powinny wykonać się cztery test logowania
+            użytkownika – dwa dla sklepu E-commerce Reserved w przeglądarce
+            Firefox oraz dwa dla sklepu Mohito w przeglądarce Chrome. Testy
+            powinny uruchomić się sekwencyjnie (jeden po drugim).
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie II – Docker – Podstawowe komendy</strong>
+</h3>
+<ol>
+    <li>
+        <p>
+            <em><strong>docker info</strong></em>
+            <em> </em>
+            – wyświetla szczegółowe informacji o Dockerze zainstalowanym na
+            maszynie użytkownika.
+        </p>
+    </li>
+    <li>
+        <p>
+            <em><strong>docker pull</strong></em>
+            <em> </em>
+– pobiera obraz repozytorium np.            <em><strong>docker pull hello-world</strong></em><em>.</em>
+        </p>
+        <ul>
+            <li>
+                <p>
+Wprowadź komendę:                    <em><strong>docker pull hello-world</strong></em>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+            <em><strong>docker image ls</strong></em>
+            <em> </em>
+            – wyświetla wszystkie pobrane obrazy.
+        </p>
+    </li>
+    <li>
+        <p>
+            <em><strong>docker run</strong></em>
+            <em> </em>
+– tworzy i uruchamia kontener np.            <em><strong>docker run hello-world</strong></em><em>.</em>
+        </p>
+        <ul>
+            <li>
+                <p>
+Wprowadź komendę:                    <em><strong>docker run hello-world</strong></em>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+            <em><strong>docker ps -a</strong></em>
+            <em> </em>
+            – wyświetla wszystkie utworzone kontenery.
+        </p>
+    </li>
+    <li>
+        <p>
+            <em><strong>docker rm &lt;</strong></em>
+            <em><strong>id</strong></em>
+            <em><strong> kontenera&gt;</strong></em>
+            <em> </em>
+            – usuwa kontener o podanym id.
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie III – Instalacja Jenkinsa z obrazu Dockera</strong>
+</h3>
+<ol>
+    <li>
+        <p>
+            Uruchom kontener z obrazu Jenkins’a:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    <em>
+                        <strong>
+                            docker run -v jenkins_home:/var/jenkins_home -p
+                            8080:8080 -p 50000:50000 --name jenkins
+                            jenkins/jenkins:lts
+                        </strong>
+                    </em>
+                    (Linux)
+                </p>
+            </li>
+            <li>
+                <p>
+                    <em>
+                        <strong>
+                            docker run -v jenkins_home:/var/jenkins_home -p
+                            8080:8080 -p 50000:50000 --name jenkins
+                            jenkins/jenkins:lts
+                        </strong>
+                    </em>
+                    (Windows)
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+            Wejdź do Jenkins’a poprzez:
+            <em>
+                <strong>
+                    localhost:8080 lub &lt;ip_maszyny_dockera&gt;:8080
+                </strong>
+            </em>
+            z poziomu przeglądarki. IP maszyny dockera, możesz uzyskać
+            wykonując komendę: <em><strong>docker-machine ip </strong></em>
+            (docker toolbox)
+        </p>
+    </li>
+    <li>
+        <p>
+Wejdź do terminala kontenera:            <em><strong>docker exec -t -i jenkins /bin/bash</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Z terminala kontenera odczytaj hasło administracyjne:
+            <em>
+                <strong>
+                    cat /var/jenkins_home/secrets/initialAdminPassword
+                </strong>
+            </em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Odblokuj Jenkinsa wpisując hasło administracyjne.
+        </p>
+    </li>
+    <li>
+        <p>
+            Wybierz instalacje wersji z najbardziej popularnymi pluginami.
+        </p>
+    </li>
+    <li>
+        <p>
+            Utwórz użytkownika administracyjnego wypełniając formularz.
+        </p>
+    </li>
+    <li>
+        <p>
+            Na etapie wpisywania
+            <strong>„Instance Configuration” </strong>
+pozostaw w polu Jenkins URL domyślną wartość czyli: <em><strong>http://localhost:8080 </strong></em><em>lub</em>            <em><strong> &lt;ip_maszyny_dockera&gt;:8080 </strong></em>
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie IV – Jenkins Pipeline</strong>
+</h3>
+<ol>
+    <li>
+        <p>
+            Kliknij w <strong>„New Item”.</strong>
+        </p>
+    </li>
+    <li>
+        <p>
+            Utwórz projekt typu <strong>„Pipeline” </strong>z dowolną nazwą np.
+            „<em><strong>Web_Test_Automation”</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+W oknie konfiguracji przejdź do sekcji <strong>„Pipeline”</strong>,            <strong> </strong>kliknij w <strong>„try simple Pipeline” </strong>
+            i wybierz: „<strong>GitHub + Maven”</strong>
+        </p>
+    </li>
+    <li>
+        <p>
+            Przerób skrypt w taki sposób, aby składał się trzech etapów:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    <strong>Pobranie repozytorium </strong>
+– jako pobierane repozytorium ustaw projekt –                    <strong> </strong>
+                    <u>
+                        <strong>
+                            https://github.com/tklepacki/aa-days.git
+                        </strong>
+                    </u>
+                    <strong>. </strong>
+                    Dodaj parametr do komendy git, tak aby kod był pobierany ze
+                    wskazanego brancha. Do pomocy skorzystaj z modułu
+                    pipeline-syntax.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Uruchomienie testów </strong>
+                    – w zależności od systemu operacyjnego jakiego posiadasz
+                    wstaw odpowiednią komendę mvn, która uruchomi testy. Usuń
+                    kod definiujący zmienną mvnHome.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Publikacja wyników testów </strong>
+                    - zainstaluj plugin <strong>testng-plugin</strong>
+                    pozwalający na publikację raportów TestNG w Jenkinsie
+                    (Manage Jenkins → Manage Plugins → Zakładka Available →
+                    znajdź TestNG Results plugin → zainstaluj bez restartowania
+                    Jenkinsa). Znajdź dokumentację plugina i sprawdź w jaki
+                    sposób możesz zdefiniować publikowanie danych testowych w
+                    skrypcie Pipeline.
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+            Uruchom Build – wejdź do logów konsoli i sprawdź co się wydarzyło.
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie V – Utworzenie maszyny typu slave</strong>
+</h3>
+<ol>
+    <li>
+        <p>
+            Stwórz folder, który będzie zawierał agenta oraz przestrzeń roboczą
+            dla zadań: „ <em><strong>/home/tomek/jenkins_node” </strong></em>
+(Linux) lub            <em><strong>C:\Users\&lt;USER&gt;\jenkins_node </strong></em>(Win)
+        </p>
+    </li>
+    <li>
+        <p>
+Kliknij w <em><strong>„Manage Jenkins”</strong></em>, a następnie            <em><strong>„Manage Nodes”</strong></em>.
+        </p>
+    </li>
+    <li>
+        <p>
+            Kliknij w <em><strong>„New Node” </strong></em>, a następnie
+            zaznacz <em><strong>„Permanent Agent”</strong></em>. Wpisz nazwe
+            node’a: <em><strong>„local_machine”</strong></em>.
+        </p>
+    </li>
+    <li>
+        <p>
+W „Remote directory” wpisz:            <em><strong>/home/&lt;USER&gt;/jenkins_node </strong></em>(Linux)
+            lub <em><strong>C:\Users\&lt;USER&gt;\jenkins_node </strong></em>
+            (Win)
+        </p>
+    </li>
+    <li>
+        <p>
+Wpisz w <em><strong>„Labels” </strong></em>:            <em><strong>„local_machine”</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+Jako <em><strong>„Launch method” </strong></em>wybierz            <em><strong>”Launch agent via Java Web Start”.</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Zatwierdź konfigurację.
+        </p>
+    </li>
+    <li>
+        <p>
+            Wejdź na node <em><strong>„local_machine”.</strong></em>
+        </p>
+    </li>
+</ol>
+<ol start="9">
+    <li>
+        <p>
+Pobierz <em><strong>agent.jar</strong></em> i umieść go w folderze<em><strong>/home/&lt;USER&gt;/jenkins_node</strong></em> lub<em><strong>C:\Users\&lt;USER&gt;\jenkins_node</strong></em>            <em><strong> </strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Skopiuj komendę uruchamiającą agenta Jenkinsa i wykonaj ją w
+            terminalu.
+        </p>
+    </li>
+    <li>
+        <p>
+            Sprawdź czy połączenie między slavem a masterem zostało
+            ustanowione.
+        </p>
+    </li>
+    <li>
+        <p>
+            Zmodyfikuj skrypt Pipeline’a wskazując node’a, na którym build
+będzie wykonywany            <em><strong>- node ('local_machine') </strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Uruchom build.
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie VI – </strong>
+    <strong>
+        Uruchomienie wszystkich testów równolegle na dwóch różnych
+        przeglądarkach
+    </strong>
+</h3>
+<ol>
+    <li>
+        <p>
+Stwórz dwa zestawy testowe: „<em><strong>testuitechrome.xml” </strong></em>oraz „            <em><strong>testsuitefirefox.xml”.</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Każdy z nich będzie uruchamiał wszystkie testy, ale na dwóch
+            różnych rodzajach przeglądarek – <em><strong>FireFox</strong></em>
+            i <em><strong>Chrome</strong></em>.
+        </p>
+    </li>
+    <li>
+        <p>
+Każdy zestaw będzie posiadał nazwę parametru<em><strong>„browser” </strong></em>z wartością<em><strong>„chrome” </strong></em>dla jednego zestawu i            <em><strong>„firefox” </strong></em>dla drugiego.
+        </p>
+    </li>
+    <li>
+        <p>
+Każdy zestaw będzie uruchamiał pakiet całego projektu:            <strong>&lt;package name=".*" /&gt; </strong>
+        </p>
+    </li>
+    <li>
+        <p>
+            Oprócz tego każdy zestaw będzie posiadał paralelizację na poziomie
+            klas z maksymalna ilością wątków 4.
+        </p>
+    </li>
+    <li>
+        <p>
+            W <em><strong>pom.xml</strong></em> zdefiniuj paralelizację na
+            poziomie suite’ów z ilością wątków 2. Zdefiniuj uruchamianie
+zestawów testowych, podając do nich ścieżki: „            <em><strong>src/test/resources/testuitechrome.xml”</strong></em>
+oraz analogicznie „            <em><strong>src/test/resources/testuitefirefox.xml”.</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Zmodyfikuj metodę setUp w każdej klasie tak, aby przyjmowała
+            parametr typu string – <em><strong>browser</strong></em> – dodaj
+            annotację <em><strong>@Parameters(„browser”)</strong></em> nad
+            metodą <em><strong>setUp(String browser).</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+Uruchom testy komendą: ./<em><strong>mvnw clean install </strong></em>(Linux)            <em><strong> lub mvnw clean install </strong></em>(Windows).
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie VII </strong>
+    <strong>– Postawienie infrastruktury Selenium Grid w kontenerach</strong>
+</h3>
+<ol>
+    <li>
+        <p>
+            Wykonaj komendę uruchamiającą Selenium HUB:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    <em>
+                        <strong>
+                            docker run --name selenium-hub -p 4444:4444
+                            selenium/hub
+                        </strong>
+                    </em>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+            Wykonaj komendy uruchamiające kolejno chrome-node oraz
+            firefox-node:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    <em>
+                        <strong>
+                            docker run --name chrome-node -e NODE_MAX_SESSION=4
+                            -e NODE_MAX_INSTANCES=4 --link selenium-hub:hub -v
+                            /dev/shm:/dev/shm -P selenium/node-chrome-debug
+                        </strong>
+                    </em>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <em>
+                        <strong>
+                            docker run --name firefox-node -e
+                            NODE_MAX_SESSION=4 -e NODE_MAX_INSTANCES=4 --link
+                            selenium-hub:hub -v /dev/shm:/dev/shm -P
+                            selenium/node-firefox-debug
+                        </strong>
+                    </em>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+Wejdź na <em><strong>localhost:4444</strong></em><em>lub</em>            <em><strong> &lt;ip_maszyny_dockera&gt;:4444 </strong></em>z
+            poziomu przeglądarki (IP maszyny dockera, możesz uzyskać wykonując
+            komendę <em><strong>docker-machine ip) </strong></em>i zweryfikuj
+            czy do hub’a dowiązane zostały node’y dla Chrome oraz FF.
+        </p>
+    </li>
+    <li>
+        <p>
+            Uruchom <em><strong>VNC Viewer, </strong></em>a następnie utwórz
+połączenia z node’ami wpisując<strong>localhost:&lt;port&gt;</strong><strong> </strong>lub<strong> </strong><em><strong>&lt;ip_maszyny_dockera&gt;:</strong></em>            <em><strong>&lt;port&gt;</strong></em><em><strong> </strong></em>-
+numer portu kontenera znajdz po wywołaniu komendy<strong> docker ps</strong>. Wymagane hasło przy połączeniu to            <em><strong>„secret”. </strong></em>
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie VIII </strong>
+    <strong>
+        – RemoteWebDriver oraz uruchomienie testów w infrastrukturze Selenium
+        GRID z Jenkins’a
+    </strong>
+</h3>
+<ol>
+    <li>
+        <p>
+            Utwórz klasę inicjalizującą RemoteWebDriver’a
+        </p>
+    </li>
+    <li>
+        <p>
+            Zmodyfikuj klasy testowe, aby korzystały z RemoteWebDriver’a przy
+            uruchomieniu.
+        </p>
+    </li>
+    <li>
+        <p>
+            Utwórz własny branch ze zmianami, a następnie wypchnij go do
+            zdalnego repozytorium na Github.
+        </p>
+    </li>
+    <li>
+        <p>
+            Dodaj do Pipeline job’a parametr odnoszący się do brancha
+            zaciąganego z repozytorium
+        </p>
+    </li>
+    <li>
+        <p>
+            Uruchom build z parametrem wskazującym na utworzony branch.
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>
+        Zadanie IX – Postawienie infrastruktury Selenium GRID za pomocą
+        docker-compose z Jenkinsa
+    </strong>
+</h3>
+<ol>
+    <li>
+        <p>
+Upewnij się, że kontenery<em><strong>selenium-hub, firefox-node </strong></em>oraz            <em><strong> chrome-node</strong></em> zostały zatrzymane i
+            usunięte.
+        </p>
+    </li>
+    <li>
+        <p>
+            Zmodyfikuj skrypt Pipeline’a w taki sposób, aby przed testem
+            automatycznie uruchamiał infrastrukturę Selenium GRID z
+            docker-compose, a następnie po zakończeniu testów, zatrzymywał
+            kontenery i usuwał je.
+        </p>
+    </li>
+    <li>
+        <p>
+Dodaj do Pipeline Joba parametr typu (Choice Parameter) o nazwie            <em><strong>TEST_INFRASTRUCTURE</strong></em> odnoszący się do
+nazwy katalogu <em><strong>„seleniumgrid”</strong></em>,<em><strong> </strong></em>w którym znajduje się plik            <em><strong>docker-compose.yml</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Uruchom testy podając w parametrze nazwę własnego brancha oraz
+            wybierając katalog <em><strong>„selenium-grid”</strong></em>
+        </p>
+    </li>
+</ol>
+
+<br>
+<hr></hr>
+<br>
+
+<h3>
+    <strong>Zadanie X – Postawienie infrastruktury Selenium GRID </strong>
+    <strong>opartej na Zalenium i uruchomienie testów w Jenkins’ie</strong>
+</h3>
+<ol>
+    <li>
+        <p>
+            Zatrzymaj, a następnie usuń kontenery selenium-hub, firefox-node
+            oraz chrome-node jeśli takowe istnieją.
+        </p>
+    </li>
+</ol>
+<p>
+    <strong>LINUX</strong>
+</p>
+<ol start="2">
+    <li>
+        <p>
+            Usuń ze skryptu Pipeline’a etap zatrzymujący i usuwający kontenery
+            po ukończeniu testów.
+        </p>
+    </li>
+    <li>
+        <p>
+            W parametrze <em><strong>TEST_INFRASTRUCTURE</strong></em> dodaj do
+            listy wyboru katalog o nazwie <em><strong>„zalenium”</strong></em>
+        </p>
+    </li>
+    <li>
+        <p>
+            Uruchom testy z własnego brancha oraz z parametrem wybierającym
+            katalog <em><strong>„zalenium”</strong></em>, w którym znajduje się
+            odpowiedni plik „<em><strong>docker-compose.yml”</strong></em>
+        </p>
+    </li>
+</ol>
+<p>
+    <em><strong>WINDOWS</strong></em>
+</p>
+<ol start="2">
+    <li>
+        <p>
+            Uruchom ręcznie infrastrukturę testową ZALENIUM:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    <em>
+                        <strong>
+                            docker run --rm -ti --name zalenium -p 4444:4444 -v
+                            /var/run/docker.sock:/var/run/docker.sock -v
+                            /tmp/videos:/home/seluser/videos --privileged
+                            dosel/zalenium start
+                        </strong>
+                    </em>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+            Usuń ze skryptu Pipeline’a etapy uruchamiające oraz
+            zatrzymujące/usuwające kontenery po ukończeniu testów.
+        </p>
+    </li>
+    <li>
+        <p>
+            Uruchom testy z własnego brancha w Jenkinsie.
+        </p>
+    </li>
+</ol>
+<p>
+    <em><strong>OSX</strong></em>
+</p>
+<ol start="2">
+    <li>
+        <p>
+            Uruchom ręcznie infrastrukturę testową ZALENIUM:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    <em>
+                        <strong>
+                            docker run --rm -ti --name zalenium -p 4444:4444 -e
+                            DOCKER=17.06.2-ce -v
+                            /var/run/docker.sock:/var/run/docker.sock -v
+                            /tmp/videos:/home/seluser/videos --privileged
+                            dosel/zalenium start
+                        </strong>
+                    </em>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <p>
+            Usuń ze skryptu Pipeline’a etapy uruchamiające oraz
+            zatrzymujące/usuwające kontenery po ukończeniu testów.
+        </p>
+    </li>
+    <li>
+        <p>
+            Uruchom testy z własnego brancha w Jenkinsie.
+        </p>
+    </li>
+</ol>
+<p>
+    <em><strong>WSZYSTKIE SYSTEMY</strong></em>
+</p>
+<ol start="5">
+    <li>
+        <p>
+Śledź wykonywanie testów w przeglądarce Chrome - wejdź na „<em><strong>localhost:4444/grid/admin/live” </strong></em>            <em>lub</em>
+            <em>
+                <strong>
+                    “&lt;ip_maszyny_dockera&gt;:4444/grid/admin/live”
+                </strong>
+            </em>
+            z poziomu przeglądarki. IP maszyny dockera, możesz uzyskać
+            wykonując komendę <em><strong>docker-machine ip </strong></em>
+            (docker toolbox)
+        </p>
+    </li>
+    <li>
+        <p>
+Po wykonaniu testów wejdź na „            <em><strong>localhost:4444/dashboard/” </strong></em><em>lub</em>
+            <em>
+                <strong> “&lt;ip_maszyny_dockera&gt;:4444/dashboard/” </strong>
+            </em>
+            z poziomu przeglądarki. IP maszyny dockera, możesz uzyskać
+            wykonując komendę <em><strong>docker-machine ip </strong></em>
+            (docker toolbox) - sprawdź wyniki testów, odtwórz video z testu.
+        </p>
+    </li>
+</ol>
+
+<br>
+

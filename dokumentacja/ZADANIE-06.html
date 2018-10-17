@@ -1,0 +1,70 @@
+<meta charset="UTF-8">
+<h3>
+    <strong>Zadanie VI – Uruchomienie wszystkich testów równolegle na dwóch różnych przeglądarkach</strong>
+</h3
+<p>
+    <strong>Pełne rozwiązanie znajduje się w branchu: feature/ZADANIE-6</strong>
+</p>
+<p>
+    <strong>pom.xml</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>&lt;plugin&gt;
+	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+	&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+	&lt;version&gt;2.22.0&lt;/version&gt;
+	&lt;configuration&gt;
+		&lt;suiteXmlFiles&gt;
+			&lt;file&gt;src/test/resources/testsuitechrome.xml&lt;/file&gt;
+			&lt;file&gt;src/test/resources/testsuitefirefox.xml&lt;/file&gt;
+		&lt;/suiteXmlFiles&gt;
+		&lt;properties&gt;
+			&lt;property&gt;
+				&lt;name&gt;suitethreadpoolsize&lt;/name&gt;
+				&lt;value&gt;2&lt;/value&gt;
+			&lt;/property&gt;
+		&lt;/properties&gt;
+	&lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+
+<p>
+    <strong>testsuitechrome.xml</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"&gt;
+&lt;suite name="All" parallel="classes" thread-count="4"&gt;
+	&lt;test name="loginChromeTests"&gt;
+		&lt;parameter name="browser" value="chrome" /&gt;
+		&lt;packages&gt;
+			&lt;package name=".*" /&gt;
+		&lt;/packages&gt;
+	&lt;/test&gt;
+&lt;/suite&gt;</code></pre>
+
+<p>
+    <strong>testsuitefirefox.xml</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"&gt; 
+&lt;suite name="All" parallel="classes" thread-count="4"&gt; 
+	&lt;test name="loginFirefoxTests"&gt; 
+		&lt;parameter name="browser" value="firefox" /&gt; 
+		&lt;packages&gt; 
+			&lt;package name=".*" /&gt; 
+		&lt;/packages&gt; 
+	&lt;/test&gt; 
+&lt;/suite&gt;</code></pre>
+
+<p>
+    <strong>Klasy testowe</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>@Parameters("browser") 
+	@BeforeMethod 
+	public void setUp(String browser) { 
+		driver = new WebDriverCreator().createDriver(browser);</code></pre>
+
+
+

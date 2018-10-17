@@ -1,0 +1,23 @@
+<meta charset="UTF-8">
+<h3>
+    <strong>Zadanie V – Utworzenie maszyny typu SLAVE</strong>
+</h3>
+<p>
+    <strong>Pipeline Script:</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>node('local_machine') {
+ stage('GIT Checkout') {
+  git branch: 'master', url: 'https://github.com/tklepacki/aa-days.git'
+ }
+ stage('Test Run') {
+  if (isUnix()) {
+   sh "./mvnw clean install"
+  } else {
+   bat("mvnw clean install")
+  }
+ }
+ stage('Results') {
+  step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+ }
+}</code></pre>

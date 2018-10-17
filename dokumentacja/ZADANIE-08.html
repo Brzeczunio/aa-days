@@ -1,0 +1,76 @@
+<meta charset="UTF-8">
+<h3>
+    <strong>Zadanie VIII – RemoteWebDriver oraz uruchomienie testów w infrastrukturze Selenium GRID z Jenkins’a</strong>
+</h3
+<p>
+    <strong>Pełne rozwiązanie znajduje się w branchu: feature/ZADANIE-8</strong>
+</p>
+<p>
+    <strong>RemoteDriverCreator.class</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>package driver;
+
+import java.net.MalformedURLException;
+
+public class RemoteDriverCreator {
+
+	public RemoteWebDriver createDriver(String browser) throws MalformedURLException {
+		switch (browser) {
+		case "firefox":
+			FirefoxOptions firefoxOptions = new FirefoxOptions();
+			RemoteWebDriver firefoxDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),
+					firefoxOptions);
+			setDefaultSettings(firefoxDriver);
+			return firefoxDriver;
+		case "chrome":
+			ChromeOptions chromeOptions = new ChromeOptions();
+			RemoteWebDriver chromeDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
+			setDefaultSettings(chromeDriver);
+			return chromeDriver;
+		default:
+			throw new IllegalArgumentException("The Browser Type is Undefined");
+		}
+	}
+
+	private static void setDefaultSettings(WebDriver driver) {
+		driver.manage().window().setSize(new Dimension(1920, 1024));
+		driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+	}
+
+	public static void setNewsletterCookie(WebDriver driver) {
+		Cookie newslettercookie = new Cookie("newsletterCookie", "4");
+		driver.manage().addCookie(newslettercookie);
+	}
+
+}</code></pre>
+
+<p>
+    <strong>Klasy testowe</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>@Parameters("browser")
+	@BeforeMethod
+	public void setUp(String browser) throws MalformedURLException {
+			driver = new RemoteDriverCreator().createDriver(browser);</code></pre>
+
+<p>
+    <strong>Pipeline Script</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>node('local_machine') {
+ stage('GIT Checkout') {
+  git branch: '$BRANCH', url: 'https://github.com/tklepacki/aa-days.git'
+ }
+ stage('Test Run') {
+  if (isUnix()) {
+   sh "./mvnw clean install"
+  } else {
+   bat("mvnw clean install")
+  }
+ }
+ stage('Results') {
+  step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+ }
+}</code></pre>
+

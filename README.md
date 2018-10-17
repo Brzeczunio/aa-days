@@ -101,6 +101,10 @@ Upewnij się, że zostały wylistowane pliki/foldery danej lokalizacji i komenda
 - Wpisz w konsoli: `docker -v`
 - Upewnij się, iż została podana informacja o wersji zainstalowanego Dockera:
   *Docker version 18.06.0-ce, build 0ffa825*
+- Tylko dla systemów Linux - wpisz następujące komendy:  
+`sudo groupadd docker`  
+`sudo usermod -aG docker $USER`  
+Uruchom ponownie swoją maszynę
 - Pobierz dockerowe obrazy następującymi komendami:  
 `docker pull jenkins/jenkins:lts`  
 `docker pull selenium/hub`  
@@ -110,10 +114,6 @@ Upewnij się, że zostały wylistowane pliki/foldery danej lokalizacji i komenda
 `docker pull selenium/node-chrome-debug`  
 `docker pull elgalu/selenium`  
 `docker pull dosel/zalenium`  
-- Tylko dla systemów Linux - wpisz następujące komendy:  
-`sudo groupadd docker`  
-`sudo usermod -aG docker $USER`  
-Uruchom ponownie swoją maszynę
 
 ### Docker Compose
 

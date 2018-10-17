@@ -1,0 +1,60 @@
+<meta charset="UTF-8">
+<h3>
+    <strong>Zadanie IX – Postawienie infrastruktury Selenium GRID za pomocą docker-compose z Jenkinsa</strong>
+</h3
+
+<p>
+    <strong>Pipeline Script</strong>
+</p>
+
+<pre  style='font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;;background-image:URL(http://4.bp.blogspot.com/-QrsEG7mCl0Y/ULpEChRkPAI/AAAAAAAABDI/tXbPdbk0gos/s1600/CopyAsHtmlbg.gif);padding:0px;color:#000000;text-align:left;line-height:20px;'><code style='color:#000000;word-wrap:normal;'>pipeline {
+ agent {
+  label 'local_machine'
+ }
+ stages {
+  stage('GIT Checkout') {
+   steps {
+	git branch: '$BRANCH', url: 'https://github.com/tklepacki/aa-days.git'
+   }
+  }
+  stage('Create Selenium Grid') {
+   steps {
+	script {
+ 	if (isUnix()) {
+  	sh "docker-compose -f src/main/java/docker/$TEST_INFRASTRUCTURE/docker-compose.yml up -d"
+ 	} else {
+  	bat("set COMPOSE_CONVERT_WINDOWS_PATHS=1 &amp; docker-compose -f src/main/java/docker/$TEST_INFRASTRUCTURE/docker-compose.yml up -d")
+ 	}
+	}
+   }
+  }
+  stage('Test Run') {
+   steps {
+	script {
+ 	if (isUnix()) {
+  	sh "./mvnw clean install"
+ 	} else {
+  	bat("mvnw clean install")
+ 	}
+	}
+   }
+  }
+  stage('Results') {
+   steps {
+	step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+   }
+  }
+ }
+ post {
+  always {
+   script {
+       if (isUnix()) {
+       sh "cd src/main/java/docker/$TEST_INFRASTRUCTURE &amp;&amp; docker-compose rm -f -s"
+       } else {
+       bat("cd src/main/java/docker/$TEST_INFRASTRUCTURE &amp;&amp; docker-compose rm -f -s")
+	}
+   }
+  }
+ }
+}</code></pre>
+
