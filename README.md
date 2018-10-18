@@ -1,4 +1,6 @@
 
+#Korzystamy z tego brancha z docker-compose i selenium hub
+
 # Drogi Uczestniku,
 
 Cieszę się, że wybrałeś właśnie mój warsztat :) 
